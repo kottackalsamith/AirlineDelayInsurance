@@ -1,0 +1,10 @@
+{
+  "name": "airlinedelayinsurance",
+  "dependencies": {},
+  "globalDependencies": {
+    "angular": "registry:dt/angular#1.5.0+20161101124950",
+    "angular-material": "registry:dt/angular-material#1.1.0-rc5.0+20161028134338",
+    "jquery": "registry:dt/jquery#1.10.0+20160929162922",
+    "node": "registry:env/node#4.0.0+20161105011511"
+  }
+}

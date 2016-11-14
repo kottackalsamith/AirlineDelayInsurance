@@ -1,0 +1,11 @@
+{
+    "name": "airlinedelayinsurance",
+    "version": "1.0.0",
+    "description": "Airline Travel Delay Insurance",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "samith",
+    "license": "ISC"
+}
