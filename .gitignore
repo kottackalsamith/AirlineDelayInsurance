@@ -45,3 +45,5 @@ bower_components
 ### Typings ###
 ## Ignore downloaded typings
 typings
+
+temp_libs/

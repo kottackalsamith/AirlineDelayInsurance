@@ -1,11 +1,17 @@
 {
-    "name": "airlinedelayinsurance",
-    "version": "1.0.0",
-    "description": "Airline Travel Delay Insurance",
-    "main": "server.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "samith",
-    "license": "ISC"
+  "name": "airlinedelayinsurance",
+  "version": "1.0.0",
+  "description": "Airline Travel Delay Insurance",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "samith",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "live-server": "^1.1.0",
+    "morgan": "^1.7.0",
+    "systemjs": "^0.19.39"
+  }
 }

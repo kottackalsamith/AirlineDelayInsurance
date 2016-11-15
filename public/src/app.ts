@@ -1,3 +1,6 @@
 /// <reference path="_all.ts" />
 
-angular.module('AirlineInsuranceApp', []);
+import * as angular from 'angular';
+
+angular.module('helloApp', []);
+
