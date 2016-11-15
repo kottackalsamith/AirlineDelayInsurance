@@ -1,20 +1,59 @@
 // Whole-script strict mode syntax
 'use strict';
 
-// Initalize the modules
+var express     = require('express');
+var bodyParser  = require('body-parser');
+var morgan      = require('morgan');
+var mongoose    = require('mongoose');
+var compression = require('compression');
 
-var liveServer = require("live-server");
 
-var params = {
-    port: 9000, // Set the server port. Defaults to 8080. 
-    host: "localhost", // Set the address to bind to. Defaults to 0.0.0.0 or process.env.IP. 
-    root: "./public", // Set root directory that's being server. Defaults to cwd. 
-    open: false, // When false, it won't load your browser by default.
-    file: "index.html", // When set, serve this file for every 404 (useful for single-page applications) 
-    wait: 1, // Waits for all changes, before reloading. Defaults to 0 sec. 
-    mount: [
-        ['/node_modules', './node_modules']
-    ], // Mount a directory to a route. 
-    logLevel: 2
-};
-liveServer.start(params);
+var config      = require('./config');
+
+var app         = express();
+
+var oneDay      = 86400000;
+
+// 
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
+// Gzip compressing 
+app.use(compression());
+
+// log every request to the console
+app.use(morgan('dev'));
+
+// For serving static assets
+app.use(express.static(__dirname + '/public',{ maxAge: oneDay }));
+
+// 
+app.use(express.static(__dirname + '/bower_components'));
+
+
+var api = require('./app/routes/api')(app, express);
+
+app.use('/api', api);
+
+//
+
+app.get('*', function(req,res){
+res.sendFile(__dirname + '/public/app/views/index.html');
+});
+
+// Establish connection to mongodb
+mongoose.connect(config.database + config.databaseName, function (err) {
+    if (err)
+        throw err;
+    else
+        console.log('Database Connected');
+});
+
+// Start Server
+var myserver = app.listen(config.port, config.host, function () {
+    var host = myserver.address().address;
+    var port = myserver.address().port;
+    console.log('Server running at http://%s:%s', host, port);
+});
