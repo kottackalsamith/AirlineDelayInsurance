@@ -3,7 +3,7 @@ System.config({
     defaultJSExtensions: true,
     paths: {
         // paths serve as alias
-        'bower:': 'bower_components/'
+        'bower:*': 'bower_components/*'
     },
     map: {
         // our app is within the app folder
@@ -15,7 +15,6 @@ System.config({
         "angular-material": "bower:angular-material/angular-material.js",
         "angular-messages": "bower:angular-messages/angular-messages.js",
         "angular-material-icons": "bower:angular-material-icons/angular-material-icons.js"
-
     },
     packages: {
         app: {
@@ -23,5 +22,11 @@ System.config({
             defaultExtension: 'js'
         }
     },
-  
+    meta: {
+        'angular': {
+            format: 'global',
+            exports: 'angular'
+        },
+    }
+
 });

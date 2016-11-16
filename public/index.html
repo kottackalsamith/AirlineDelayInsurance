@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="helloApp">
+<html lang="en">
 
 <head>
     <base href="/">
@@ -13,18 +13,25 @@
 
 <body>
 
+    <h1 ng-controller="MainController as vm">
+        {{vm.message}}
+    </h1>
     <!-- Load libraries -->
     <!-- Polyfill for older browsers -->
 
-    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/scripts/systemjs/system.src.js"></script>
 
     <!--  Configure SystemJS -->
     <script src="systemjs.config.js"></script>
+
+
     <script>
         System.import('app').catch(function(err) {
             console.error(err);
         });
     </script>
+
+
 
 </body>
 
