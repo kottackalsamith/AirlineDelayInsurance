@@ -1,13 +1,15 @@
 /// <reference path="_all.ts" />
 
 import * as angular from 'angular';
-import {MainController} from './maincontroller';
+import {MainController} from './controllers/maincontroller';
 
 
 // Creating main app module and MainController
 angular
     .module('AirlineInsuranceApp', [])
     .controller('MainController', MainController);
+
+
 
 
 // Bootstrap the angular AirlineInsuranceApp module

@@ -46,4 +46,6 @@ bower_components
 ## Ignore downloaded typings
 typings
 
-temp_libs/
+### Remove Maps ###
+*.map
+
