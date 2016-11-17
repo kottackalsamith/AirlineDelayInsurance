@@ -10,6 +10,7 @@ System.config({
         app: 'app',
         // Angular Modules
         "angular": "bower:angular/angular.js",
+        "angular-route":"bower:angular-route/angular-route.js",
         "angular-animate": "bower:angular-animate/angular-animate.js",
         "angular-aria": "bower:angular-aria/angular-aria.js",
         "angular-material": "bower:angular-material/angular-material.js",
@@ -27,6 +28,11 @@ System.config({
             format: 'global',
             exports: 'angular'
         },
+        'angular-route':{
+            "deps":[
+                "angular"
+            ]
+        }
     }
 
 });
