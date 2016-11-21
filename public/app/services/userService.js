@@ -9,14 +9,6 @@ System.register([], function(exports_1, context_1) {
     return {
         setters:[],
         execute: function() {
-            // function userService($http) {
-            //         var userFactory = {};
-            //         userFactory.create = function(userData){
-            //             return $http.post('/api/signup', userData);
-            //         };
-            //         console.log(userFactory);
-            //         return userFactory;
-            // }
             UserService = (function () {
                 function UserService($http) {
                     this.$http = $http;
