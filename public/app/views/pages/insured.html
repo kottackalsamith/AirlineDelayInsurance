@@ -1,7 +1,7 @@
 <!-- Plans -->
-<section id="plans" class="price-plans" ng-controller="InsuranceController">
-	<div class="row" ng-if="main.user.username == name">
-		<div class="colmd-12" ng-repeat="x in content">
+<section id="plans" class="price-plans" ng-controller="InsuranceController as insur">
+	<div class="row" ng-if="main.user.username == insur.name">
+		<div class="colmd-12" ng-repeat="x in insur.content">
 			
 				<div class="row" ng-if="main.user.username == x.name">
 					<!-- item -->
@@ -25,7 +25,7 @@
 	</div>
 
 
-	<div class="row" ng-if="main.user.username != name">
+	<div class="row" ng-if="main.user.username != insur.name">
 		<div class="colmd-12">
 			<div class="row">
 				<!-- item -->
