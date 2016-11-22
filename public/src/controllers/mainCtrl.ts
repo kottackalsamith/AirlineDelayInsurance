@@ -1,6 +1,6 @@
 // Controller for authentication check and logout
-export default angular.module('mainCtrl', [])
-    .controller('MainController', function($rootScope, $location, Auth){
+
+function mainController($rootScope, $location, Auth){
 
         var vm = this;
 
@@ -42,4 +42,6 @@ export default angular.module('mainCtrl', [])
             $location.path('logout');
         };
 
-    });
+    }
+export default angular.module('mainCtrl', [])
+    .controller('MainController', mainController);
