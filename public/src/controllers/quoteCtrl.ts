@@ -1,5 +1,4 @@
-export default angular.module('quoteCtrl', [])
-    .controller('QuoteCreateController', function ($scope, $http, $filter, $rootScope, Auth) {
+function quoteCreateController ($scope, $http, $filter, $rootScope, Auth) {
         $scope.quoteData = {};
         $scope.responseFlag = false;
 
@@ -120,4 +119,7 @@ export default angular.module('quoteCtrl', [])
                 }
             });
         };
-    });
+    }
+
+export default angular.module('quoteCtrl', [])
+    .controller('QuoteCreateController', quoteCreateController);
