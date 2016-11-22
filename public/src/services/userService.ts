@@ -1,11 +1,11 @@
 /// <reference path="../_all.ts" />
 
 interface UserServiceInterface {
-    create(userdata:Object):Object;
+    create(userdata: Object): Object;
 }
 
 class UserService implements UserServiceInterface {
-    
+
     constructor(private $http: ng.IHttpService) {
         return;
     }
@@ -15,10 +15,10 @@ class UserService implements UserServiceInterface {
     }
 }
 
- function createUser($http: ng.IHttpService):UserService {
-        return new UserService($http);
-    }
+function createUser($http: ng.IHttpService): UserService {
+    return new UserService($http);
+}
 
 
 export default angular.module('userService', [])
-    .factory('User', ['$http',createUser]);
+    .factory('User', ['$http', createUser]);
