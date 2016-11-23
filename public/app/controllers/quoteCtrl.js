@@ -2,8 +2,9 @@ System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     function quoteCreateController($scope, $http, $filter, $rootScope, Auth) {
-        $scope.quoteData = {};
-        $scope.responseFlag = false;
+        var _this = this;
+        _this.quoteData = {};
+        _this.responseFlag = false;
         var sourceList = [{
                 "id": 1,
                 "place": "Trivandrum"
@@ -42,11 +43,11 @@ System.register([], function(exports_1, context_1) {
                 "place": "Frankfut",
                 "sourceId": 4
             }]; // Option destination
-        $scope.sourceOptions = sourceList;
-        $scope.destinationOptions = [];
+        _this.sourceOptions = sourceList;
+        _this.destinationOptions = [];
         var num = 2;
-        $scope.getDestination = function (source) {
-            $scope.destinationOptions = ($filter('filter')(destinationList, {
+        _this.getDestination = function (source) {
+            _this.destinationOptions = ($filter('filter')(destinationList, {
                 sourceId: source.id
             }));
         };
@@ -57,19 +58,19 @@ System.register([], function(exports_1, context_1) {
         };
         var currentDate = new Date(); //Get the currentdate
         var lastDate = new Date(); // For last date
-        $scope.dates = {
+        _this.dates = {
             minDate: currentDate,
             maxDate: lastDate.addDays(4) //maximum allowed date
         };
-        $scope.quoteCreate = function () {
-            $scope.total = '';
-            $scope.responseFlag = false;
+        _this.quoteCreate = function () {
+            _this.total = '';
+            _this.responseFlag = false;
             var travelInfo = {
-                'source': $scope.quoteData.source.place,
-                'destination': $scope.quoteData.destination.place,
-                'persons': $scope.quoteData.persons,
-                'date': $filter('date')($scope.quoteData.date, 'yyyy-MM-dd'),
-                'time': $filter('date')($scope.quoteData.time, 'HH:mm:ss')
+                'source': _this.quoteData.source.place,
+                'destination': _this.quoteData.destination.place,
+                'persons': _this.quoteData.persons,
+                'date': $filter('date')(_this.quoteData.date, 'yyyy-MM-dd'),
+                'time': $filter('date')(_this.quoteData.time, 'HH:mm:ss')
             };
             $http({
                 method: 'POST',
@@ -82,21 +83,21 @@ System.register([], function(exports_1, context_1) {
                     'time': travelInfo.time
                 }
             }).success(function (data, status, headers, config) {
-                $scope.total = data.total;
-                $scope.responseFlag = data.success;
+                _this.total = data.total;
+                _this.responseFlag = data.success;
             })
                 .error(function (data, status, headers, config) {
                 console.log(config);
             });
         };
         // Apply for insurance
-        $scope.insuranceCreate = function () {
+        _this.insuranceCreate = function () {
             var travelInfo = {
-                'source': $scope.quoteData.source.place,
-                'destination': $scope.quoteData.destination.place,
-                'persons': $scope.quoteData.persons,
-                'date': $filter('date')($scope.quoteData.date, 'yyyy-MM-dd'),
-                'time': $filter('date')($scope.quoteData.time, 'HH:mm:ss'),
+                'source': _this.quoteData.source.place,
+                'destination': _this.quoteData.destination.place,
+                'persons': _this.quoteData.persons,
+                'date': $filter('date')(_this.quoteData.date, 'yyyy-MM-dd'),
+                'time': $filter('date')(_this.quoteData.time, 'HH:mm:ss'),
                 'name': $rootScope.userDetails.username,
                 'insured': 'true'
             };

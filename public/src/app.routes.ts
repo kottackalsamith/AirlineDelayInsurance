@@ -4,9 +4,7 @@ import * as angular from 'angular';
 
 import 'angular-route';
 
-export default angular.module('appRoutes', ['ngRoute'])
-
-.config(function ($routeProvider, $locationProvider) {
+function rootCtrl($routeProvider, $locationProvider) {
 
     $routeProvider
         .when('/', {
@@ -22,7 +20,7 @@ export default angular.module('appRoutes', ['ngRoute'])
             templateUrl: 'app/views/pages/signup.html'
         })
         .when('/insured', {
-            templateUrl:'app/views/pages/insured.html'
+            templateUrl: 'app/views/pages/insured.html'
         });
 
 
@@ -30,4 +28,7 @@ export default angular.module('appRoutes', ['ngRoute'])
         enabled: true,
         requireBase: false
     });
-});
+}
+
+export default angular.module('appRoutes', ['ngRoute'])
+    .config(rootCtrl);

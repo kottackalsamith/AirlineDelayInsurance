@@ -98,7 +98,39 @@ function authInterceptor($q, $location, AuthToken) {
 
 }
 
+class AuthenticateInterceptor {
 
+    public token;
+
+    static $inject = ['$q', '$location', 'AuthToken'];
+
+    constructor(private $q: ng.IQService, private $location: ng.ILocationService, private AuthToken) {
+
+    }
+
+    public request(config) {
+        this.token = this.AuthToken.getToken();
+
+        if (this.token) {
+            config.headers['x-access-token'] = this.token;
+        }
+
+        return config;
+    }
+
+    public responseError(response) {
+        if (response.status === 403) {
+            this.$location.path('/login');
+        }
+        return this.$q.reject(response);
+    }
+
+}
+
+
+function authenticateInterceptor($q: ng.IQService, $location: ng.ILocationService, AuthToken) {
+    return new AuthenticateInterceptor($q, $location, AuthToken);
+}
 
 
 export default angular
