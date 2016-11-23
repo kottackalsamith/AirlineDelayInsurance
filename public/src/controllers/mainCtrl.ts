@@ -1,50 +1,6 @@
 // Controller for authentication check and logout
 
-// function mainController($rootScope, $location, Auth) {
-
-//     var vm = this;
-
-//     vm.loggedIn = Auth.isLoggedIn();
-//     $rootScope.$on('$routeChangeStart', function () {
-//         vm.loggedIn = Auth.isLoggedIn();
-//         Auth.getUser()
-//             .then(function (data) {
-//                 vm.user = data.data;
-//                 $rootScope.userDetails = vm.user;
-//             });
-//     });
-
-//     vm.doLogin = function () {
-//         vm.processing = true;
-//         vm.error = '';
-
-//         Auth.login(vm.loginData.username, vm.loginData.password)
-//             .success(function (data) {
-//                 vm.processing = false;
-
-//                 Auth.getUser()
-//                     .then(function (data) {
-//                         vm.user = data.data;
-//                     });
-
-//                 if (data.success) {
-//                     $location.path('/');
-//                 } else {
-//                     vm.error = data.message;
-//                     vm.errorFlag = true;
-//                     console.log(vm.error);
-//                 }
-//             });
-//     };
-
-//     vm.doLogout = function () {
-//         Auth.logout();
-//         $location.path('logout');
-//     };
-
-// }
-
-
+import '../services/authService';
 class MainController {
 
     public processing;
@@ -53,14 +9,13 @@ class MainController {
     public loginData;
     public user;
     public loggedIn;
+    public userDetails;
 
     static $inject = ['$rootScope', '$location', 'Auth'];
 
     constructor(private $rootScope: ng.IRootScopeService, private $location: ng.ILocationService, private Auth) {
 
     }
-
-
 
 
     public loggedInCheck() {
@@ -110,5 +65,5 @@ class MainController {
 
 
 
-export default angular.module('mainCtrl', [])
+export default angular.module('mainCtrl', ['authService'])
     .controller('MainController', MainController);

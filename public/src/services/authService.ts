@@ -1,60 +1,77 @@
-function auth($http, $q, AuthToken) {
-    var authFactory = {};
+class Authenticate {
 
-    authFactory.login = function (username, password) {
+    static $inject = ['$http', '$q', 'AuthToken'];
+
+    constructor(private $http: ng.IHttpService, private $q: ng.IQService, private AuthToken) {
+
+    }
+    public login(username, password) {
+
+        let instance = this;
 
         console.log(username + " " + password);
 
-        return $http.post('/api/login', {
+        return this.$http.post('/api/login', {
             username: username,
             password: password
         })
             .success(function (data) {
-                AuthToken.setToken(data.token);
+                instance.AuthToken.setToken(data.token);
                 return data;
             });
-    };
+    }
 
-    authFactory.logout = function () {
-        AuthToken.setToken();
-    };
+    public logout() {
+        this.AuthToken.setToken();
+    }
 
-    authFactory.isLoggedIn = function () {
-        if (AuthToken.getToken()) {
+    public isLoggedIn() {
+        if (this.AuthToken.getToken()) {
             return true;
         } else {
             return false;
         }
-    };
+    }
 
-    authFactory.getUser = function () {
-        if (AuthToken.getToken()) {
-            return $http.get('/api/me');
+    public getUser() {
+        if (this.AuthToken.getToken()) {
+            return this.$http.get('/api/me');
         } else {
-            return $q.reject({ message: "User has no token" });
+            return this.$q.reject({ message: "User has no token" });
         }
-    };
-
-    return authFactory;
+    }
 }
 
-function authToken($window) {
-    var authTokenFactory = {};
 
-    authTokenFactory.getToken = function () {
-        return $window.localStorage.getItem('token');
-    };
+function authenticate($http: ng.IHttpService, $q: ng.IQService, AuthToken) {
+    return new Authenticate($http, $q, AuthToken);
+}
 
-    authTokenFactory.setToken = function (token) {
+class AuthenticateToken {
+
+    static $inject = ['$window'];
+
+    constructor(private $window: ng.IWindowService) {
+
+    }
+
+    public getToken() {
+        return this.$window.localStorage.getItem('token');
+    }
+
+    public setToken(token) {
 
         if (token) {
-            $window.localStorage.setItem('token', token);
+            this.$window.localStorage.setItem('token', token);
         } else {
-            $window.localStorage.removeItem('token');
+            this.$window.localStorage.removeItem('token');
         }
-    };
+    }
 
-    return authTokenFactory;
+}
+
+function authenticateToken($window: ng.IWindowService) {
+    return new AuthenticateToken($window);
 }
 
 function authInterceptor($q, $location, AuthToken) {
@@ -71,7 +88,7 @@ function authInterceptor($q, $location, AuthToken) {
     };
 
     interceptorFactory.responseError = function (response) {
-        if (response.status == 403) {
+        if (response.status === 403) {
             $location.path('/login');
         }
         return $q.reject(response);
@@ -81,8 +98,11 @@ function authInterceptor($q, $location, AuthToken) {
 
 }
 
+
+
+
 export default angular
     .module('authService', [])
-    .factory('Auth', auth)
-    .factory('AuthToken', authToken)
-    .factory('AuthInterceptor', authInterceptor);
+    .factory('Auth', ['$http', '$q', 'AuthToken', authenticate])
+    .factory('AuthToken', ['$window', authenticateToken])
+    .factory('AuthInterceptor', ['$q', '$location', 'AuthToken', authInterceptor]);
