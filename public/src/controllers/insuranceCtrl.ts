@@ -1,10 +1,9 @@
 // Controller for insurance tab
 class InsuranceController {
-    public content;
-    public response;
-    public statustext;
-    public statuscode;
-    public name;
+    public content:any;
+    public statustext:string;
+    public statuscode:number;
+    public name:string;
 
     static $inject = ['$rootScope', '$scope', '$http'];
 

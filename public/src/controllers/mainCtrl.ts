@@ -3,13 +3,16 @@
 import '../services/authService';
 class MainController {
 
-    public processing;
-    public error;
-    public errorFlag;
-    public loginData;
-    public user;
-    public loggedIn;
-    public userDetails;
+    public processing: boolean;
+    public error: string;
+    public errorFlag: boolean;
+    public loginData: {
+        username,
+        password
+    };
+    public user: Object;
+    public loggedIn: Function;
+    public userDetails: string;
 
     static $inject = ['$rootScope', '$location', 'Auth'];
 

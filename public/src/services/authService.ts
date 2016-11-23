@@ -1,5 +1,8 @@
 class Authenticate {
 
+    public username: string;
+    public password: string;
+
     static $inject = ['$http', '$q', 'AuthToken'];
 
     constructor(private $http: ng.IHttpService, private $q: ng.IQService, private AuthToken) {
@@ -9,11 +12,11 @@ class Authenticate {
 
         let instance = this;
 
-        console.log(username + " " + password);
+        console.log(instance.username + " " + instance.password);
 
         return this.$http.post('/api/login', {
-            username: username,
-            password: password
+            username: instance.username,
+            password: instance.password
         })
             .success(function (data) {
                 instance.AuthToken.setToken(data.token);
