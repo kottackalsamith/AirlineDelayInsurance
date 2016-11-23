@@ -1,7 +1,7 @@
 /// <reference path="../_all.ts" />
 
 interface UserServiceInterface {
-    create(userdata: Object): Object;
+    create(userdata: Object): ng.IHttpPromise<Object>;
 }
 
 class UserService implements UserServiceInterface {
@@ -9,7 +9,7 @@ class UserService implements UserServiceInterface {
     constructor(private $http: ng.IHttpService) {
         return;
     }
-    create(userdata: Object): Object {
+    create(userdata: Object):ng.IHttpPromise<Object> {
         console.log(userdata);
         return this.$http.post('/api/signup', userdata);
     }

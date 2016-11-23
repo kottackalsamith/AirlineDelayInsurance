@@ -21,7 +21,7 @@ class MainController {
     }
 
 
-    public loggedInCheck() {
+    public loggedInCheck():void {
         let instance = this;
         this.loggedIn = this.Auth.isLoggedIn();
         this.$rootScope.$on('$routeChangeStart', function () {
@@ -35,7 +35,7 @@ class MainController {
 
     }
 
-    public doLogin() {
+    public doLogin():void {
         let instance = this;
         this.processing = true;
         this.error = '';
@@ -59,7 +59,7 @@ class MainController {
             });
     }
 
-    public doLogout() {
+    public doLogout():void {
         this.Auth.logout();
         this.$location.path('logout');
     };

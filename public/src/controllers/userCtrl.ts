@@ -15,7 +15,7 @@ class UserCreateController {
 
     constructor(private User, private $location: ng.ILocationService, private $window: ng.IWindowService) {
     }
-    public signupUser() {
+    public signupUser():void {
         this.message = '';
         let instance = this;
         console.log(this.userData);

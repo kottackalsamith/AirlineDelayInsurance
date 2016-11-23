@@ -11,7 +11,7 @@ class InsuranceController {
 
     }
 
-    public Insurance() {
+    public Insurance():ng.IPromise<void> {
         var _this = this;
         return _this.$http.get('api/insured')
             .then(function (response) {
