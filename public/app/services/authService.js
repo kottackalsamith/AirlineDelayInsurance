@@ -1,7 +1,7 @@
 System.register([], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var Authenticate, AuthenticateToken;
+    var Authenticate, AuthenticateToken, AuthenticateInterceptor;
     function authenticate($http, $q, AuthToken) {
         return new Authenticate($http, $q, AuthToken);
     }
@@ -24,6 +24,9 @@ System.register([], function(exports_1, context_1) {
             return $q.reject(response);
         };
         return interceptorFactory;
+    }
+    function authenticateInterceptor($q, $location, AuthToken) {
+        return new AuthenticateInterceptor($q, $location, AuthToken);
     }
     return {
         setters:[],
@@ -85,6 +88,28 @@ System.register([], function(exports_1, context_1) {
                 };
                 AuthenticateToken.$inject = ['$window'];
                 return AuthenticateToken;
+            }());
+            AuthenticateInterceptor = (function () {
+                function AuthenticateInterceptor($q, $location, AuthToken) {
+                    this.$q = $q;
+                    this.$location = $location;
+                    this.AuthToken = AuthToken;
+                }
+                AuthenticateInterceptor.prototype.request = function (config) {
+                    this.token = this.AuthToken.getToken();
+                    if (this.token) {
+                        config.headers['x-access-token'] = this.token;
+                    }
+                    return config;
+                };
+                AuthenticateInterceptor.prototype.responseError = function (response) {
+                    if (response.status === 403) {
+                        this.$location.path('/login');
+                    }
+                    return this.$q.reject(response);
+                };
+                AuthenticateInterceptor.$inject = ['$q', '$location', 'AuthToken'];
+                return AuthenticateInterceptor;
             }());
             exports_1("default",angular
                 .module('authService', [])
