@@ -8,23 +8,6 @@ System.register([], function(exports_1, context_1) {
     function authenticateToken($window) {
         return new AuthenticateToken($window);
     }
-    function authInterceptor($q, $location, AuthToken) {
-        var interceptorFactory = {};
-        interceptorFactory.request = function (config) {
-            var token = AuthToken.getToken();
-            if (token) {
-                config.headers['x-access-token'] = token;
-            }
-            return config;
-        };
-        interceptorFactory.responseError = function (response) {
-            if (response.status === 403) {
-                $location.path('/login');
-            }
-            return $q.reject(response);
-        };
-        return interceptorFactory;
-    }
     function authenticateInterceptor($q, $location, AuthToken) {
         return new AuthenticateInterceptor($q, $location, AuthToken);
     }
@@ -91,23 +74,24 @@ System.register([], function(exports_1, context_1) {
             }());
             AuthenticateInterceptor = (function () {
                 function AuthenticateInterceptor($q, $location, AuthToken) {
+                    var _this = this;
                     this.$q = $q;
                     this.$location = $location;
                     this.AuthToken = AuthToken;
+                    this.request = function (config) {
+                        var token = _this.AuthToken.getToken();
+                        if (token) {
+                            config.headers['x-access-token'] = token;
+                        }
+                        return config;
+                    };
+                    this.responseError = function (response) {
+                        if (response.status === 403) {
+                            _this.$location.path('/login');
+                        }
+                        return _this.$q.reject(response);
+                    };
                 }
-                AuthenticateInterceptor.prototype.request = function (config) {
-                    this.token = this.AuthToken.getToken();
-                    if (this.token) {
-                        config.headers['x-access-token'] = this.token;
-                    }
-                    return config;
-                };
-                AuthenticateInterceptor.prototype.responseError = function (response) {
-                    if (response.status === 403) {
-                        this.$location.path('/login');
-                    }
-                    return this.$q.reject(response);
-                };
                 AuthenticateInterceptor.$inject = ['$q', '$location', 'AuthToken'];
                 return AuthenticateInterceptor;
             }());
@@ -115,7 +99,7 @@ System.register([], function(exports_1, context_1) {
                 .module('authService', [])
                 .factory('Auth', ['$http', '$q', 'AuthToken', authenticate])
                 .factory('AuthToken', ['$window', authenticateToken])
-                .factory('AuthInterceptor', ['$q', '$location', 'AuthToken', authInterceptor]));
+                .factory('AuthInterceptor', ['$q', '$location', 'AuthToken', authenticateInterceptor]));
         }
     }
 });

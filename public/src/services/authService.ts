@@ -74,33 +74,8 @@ function authenticateToken($window: ng.IWindowService) {
     return new AuthenticateToken($window);
 }
 
-function authInterceptor($q, $location, AuthToken) {
-    var interceptorFactory = {};
-
-    interceptorFactory.request = function (config) {
-        var token = AuthToken.getToken();
-
-        if (token) {
-            config.headers['x-access-token'] = token;
-        }
-
-        return config;
-    };
-
-    interceptorFactory.responseError = function (response) {
-        if (response.status === 403) {
-            $location.path('/login');
-        }
-        return $q.reject(response);
-    };
-
-    return interceptorFactory;
-
-}
-
 class AuthenticateInterceptor {
 
-    public token;
 
     static $inject = ['$q', '$location', 'AuthToken'];
 
@@ -108,17 +83,17 @@ class AuthenticateInterceptor {
 
     }
 
-    public request(config) {
-        this.token = this.AuthToken.getToken();
+    public request = (config) => {
+        let token = this.AuthToken.getToken();
 
-        if (this.token) {
-            config.headers['x-access-token'] = this.token;
+        if (token) {
+            config.headers['x-access-token'] = token;
         }
 
         return config;
     }
 
-    public responseError(response) {
+    public responseError = (response) => {
         if (response.status === 403) {
             this.$location.path('/login');
         }
@@ -137,4 +112,4 @@ export default angular
     .module('authService', [])
     .factory('Auth', ['$http', '$q', 'AuthToken', authenticate])
     .factory('AuthToken', ['$window', authenticateToken])
-    .factory('AuthInterceptor', ['$q', '$location', 'AuthToken', authInterceptor]);
+    .factory('AuthInterceptor', ['$q', '$location', 'AuthToken', authenticateInterceptor]);
