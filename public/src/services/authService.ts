@@ -1,3 +1,5 @@
+
+// For authentication
 class Authenticate {
 
     public username: string;
@@ -8,6 +10,8 @@ class Authenticate {
     constructor(private $http: ng.IHttpService, private $q: ng.IQService, private AuthToken) {
 
     }
+
+    // For login
     public login(username:string, password:string):ng.IHttpPromise<{}> {
 
         let instance = this;
@@ -24,10 +28,12 @@ class Authenticate {
             });
     }
 
+    // For logout
     public logout():void {
         this.AuthToken.setToken();
     }
 
+    // To check logged in or not
     public isLoggedIn():boolean {
         if (this.AuthToken.getToken()) {
             return true;
@@ -36,6 +42,7 @@ class Authenticate {
         }
     }
 
+    // For getting the logged in, user details
     public getUser():ng.IPromise<any> {
         if (this.AuthToken.getToken()) {
             return this.$http.get('/api/me');
@@ -45,11 +52,13 @@ class Authenticate {
     }
 }
 
-
+// For returning the class because the factory returns a object
 function authenticate($http: ng.IHttpService, $q: ng.IQService, AuthToken): Authenticate {
     return new Authenticate($http, $q, AuthToken);
 }
 
+
+//  For setting and getting the token
 class AuthenticateToken {
 
     static $inject = ['$window'];
@@ -58,10 +67,12 @@ class AuthenticateToken {
 
     }
 
+    // To get the token from localStorage
     public getToken():string {
         return this.$window.localStorage.getItem('token');
     }
 
+    // To set the token to localStorage
     public setToken(token:string):void {
 
         if (token) {
@@ -73,10 +84,13 @@ class AuthenticateToken {
 
 }
 
+// For returning the class because the factory returns a object
 function authenticateToken($window: ng.IWindowService): AuthenticateToken {
     return new AuthenticateToken($window);
 }
 
+
+// Authentication interceptor to set token to headers
 class AuthenticateInterceptor {
 
 
@@ -105,7 +119,7 @@ class AuthenticateInterceptor {
 
 }
 
-
+// For returning the class because the factory returns a object
 function authenticateInterceptor($q: ng.IQService, $location: ng.ILocationService, AuthToken): AuthenticateInterceptor {
     return new AuthenticateInterceptor($q, $location, AuthToken);
 }

@@ -9,6 +9,8 @@ class UserService implements UserServiceInterface {
     constructor(private $http: ng.IHttpService) {
         return;
     }
+
+    // For user registeration
     create(userdata: Object):ng.IHttpPromise<Object> {
         console.log(userdata);
         return this.$http.post('/api/signup', userdata);

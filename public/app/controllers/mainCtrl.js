@@ -12,8 +12,9 @@ System.register(['../services/authService'], function(exports_1, context_1) {
                     this.$rootScope = $rootScope;
                     this.$location = $location;
                     this.Auth = Auth;
-                    this.loggedIn = this.Auth.isLoggedIn();
+                    this.loggedIn = this.Auth.isLoggedIn(); // logged in check for redirection to insured page
                 }
+                // For checking weather the user is logged in
                 MainController.prototype.loggedInCheck = function () {
                     var instance = this;
                     this.$rootScope.$on('$routeChangeStart', function () {
@@ -25,10 +26,12 @@ System.register(['../services/authService'], function(exports_1, context_1) {
                         });
                     });
                 };
+                // For sign in
                 MainController.prototype.doLogin = function () {
                     var instance = this;
                     this.processing = true;
                     this.error = '';
+                    // Call login function in AuthService
                     this.Auth.login(this.loginData.username, this.loginData.password)
                         .success(function (data) {
                         instance.processing = false;
@@ -46,6 +49,7 @@ System.register(['../services/authService'], function(exports_1, context_1) {
                         }
                     });
                 };
+                // For sign out
                 MainController.prototype.doLogout = function () {
                     this.Auth.logout();
                     this.$location.path('logout');

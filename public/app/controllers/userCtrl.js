@@ -13,6 +13,7 @@ System.register(['../services/userService'], function(exports_1, context_1) {
                     this.$location = $location;
                     this.$window = $window;
                 }
+                // For User Registeration
                 UserCreateController.prototype.signupUser = function () {
                     this.message = '';
                     var instance = this;

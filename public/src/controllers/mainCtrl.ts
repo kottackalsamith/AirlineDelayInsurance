@@ -20,8 +20,9 @@ class MainController {
 
     }
 
-    public loggedIn:boolean = this.Auth.isLoggedIn();
+    public loggedIn:boolean = this.Auth.isLoggedIn(); // logged in check for redirection to insured page
 
+    // For checking weather the user is logged in
     public loggedInCheck():void {
         let instance = this;
         this.$rootScope.$on('$routeChangeStart', function () {
@@ -35,11 +36,13 @@ class MainController {
 
     }
 
+    // For sign in
     public doLogin():void {
         let instance = this;
         this.processing = true;
         this.error = '';
 
+        // Call login function in AuthService
         this.Auth.login(this.loginData.username, this.loginData.password)
             .success(function (data) {
                 instance.processing = false;
@@ -59,6 +62,7 @@ class MainController {
             });
     }
 
+    // For sign out
     public doLogout():void {
         this.Auth.logout();
         this.$location.path('logout');

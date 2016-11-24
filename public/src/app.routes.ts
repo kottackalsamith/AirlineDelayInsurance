@@ -1,5 +1,7 @@
 /// <reference path="_all.ts" />
 
+// For routing of the pages
+
 import * as angular from 'angular';
 
 import 'angular-route';

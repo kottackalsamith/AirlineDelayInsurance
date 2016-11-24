@@ -11,6 +11,7 @@ class InsuranceController {
 
     }
 
+    // For loading the insurance details in the insurance page
     public Insurance():ng.IPromise<void> {
         var _this = this;
         return _this.$http.get('api/insured')

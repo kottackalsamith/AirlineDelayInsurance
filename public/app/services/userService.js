@@ -14,6 +14,7 @@ System.register([], function(exports_1, context_1) {
                     this.$http = $http;
                     return;
                 }
+                // For user registeration
                 UserService.prototype.create = function (userdata) {
                     console.log(userdata);
                     return this.$http.post('/api/signup', userdata);
