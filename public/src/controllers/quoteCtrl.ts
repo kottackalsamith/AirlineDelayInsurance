@@ -236,7 +236,7 @@ class QuoteCreateController {
             });
     }
 
-    public insuranceCreate = function () {
+    public insuranceCreate() {
         let _this = this;
         let travelInfo = {
             'source': _this.quoteData.source.place,
