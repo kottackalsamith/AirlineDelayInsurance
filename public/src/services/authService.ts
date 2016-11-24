@@ -12,11 +12,11 @@ class Authenticate {
 
         let instance = this;
 
-        console.log(instance.username + " " + instance.password);
+        console.log(username + " " + password);
 
         return this.$http.post('/api/login', {
-            username: instance.username,
-            password: instance.password
+            username: username,
+            password: password
         })
             .success(function(data) {
                 instance.AuthToken.setToken(data.token);

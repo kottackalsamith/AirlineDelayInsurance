@@ -11,7 +11,7 @@ class MainController {
         password
     };
     public user: Object;
-    public loggedIn: Function;
+    
     public userDetails: string;
 
     static $inject = ['$rootScope', '$location', 'Auth'];
@@ -20,10 +20,10 @@ class MainController {
 
     }
 
+    public loggedIn:boolean = this.Auth.isLoggedIn();
 
     public loggedInCheck():void {
         let instance = this;
-        this.loggedIn = this.Auth.isLoggedIn();
         this.$rootScope.$on('$routeChangeStart', function () {
             instance.loggedIn = instance.Auth.isLoggedIn();
             instance.Auth.getUser()

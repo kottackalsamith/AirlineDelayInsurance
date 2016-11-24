@@ -12,10 +12,10 @@ System.register(['../services/authService'], function(exports_1, context_1) {
                     this.$rootScope = $rootScope;
                     this.$location = $location;
                     this.Auth = Auth;
+                    this.loggedIn = this.Auth.isLoggedIn();
                 }
                 MainController.prototype.loggedInCheck = function () {
                     var instance = this;
-                    this.loggedIn = this.Auth.isLoggedIn();
                     this.$rootScope.$on('$routeChangeStart', function () {
                         instance.loggedIn = instance.Auth.isLoggedIn();
                         instance.Auth.getUser()

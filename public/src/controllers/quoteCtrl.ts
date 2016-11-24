@@ -201,6 +201,7 @@ class QuoteCreateController {
 
     };
 
+
     public quoteCreate() {
         let _this = this;
         _this.total = '';
